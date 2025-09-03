@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Papum Encomendas — Rota pelo WhatsApp</title>
+  <link href="https://fonts.googleapis.com/css?family=Oswald:700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script>
+    // Exibe campo de horas se checkbox for marcado
+    const precisoEspere = document.getElementById('precisoEspere');
+    const campoHoras = document.getElementById('campoHoras');
+    precisoEspere.addEventListener('change', function() {
+      document.getElementById('horas').disabled = !this.checked;
+    });
+    function updateMenuBottom() {
+      const nav = document.querySelector('nav');
+      if (nav) {
+        const rect = nav.getBoundingClientRect();
+        document.documentElement.style.setProperty('--menu-bottom', (rect.bottom + window.scrollY) + 'px');
+      }
+    }
+    window.addEventListener('resize', updateMenuBottom);
+    window.addEventListener('DOMContentLoaded', updateMenuBottom);
+    window.addEventListener('scroll', updateMenuBottom);
+  </script>
+  <div id="car-wheel-animation" style="display:none">
+    <img src="images/roda.png" alt="Roda de carro girando">
+  </div>
+  <script>
+    function animateWheel() {
+      const wheel = document.getElementById('car-wheel-animation');
+      const nav = document.querySelector('nav');
+      if (wheel && nav) {
+        const rect = nav.getBoundingClientRect();
+        wheel.style.top = (rect.top + window.scrollY - 50) + 'px';
+        wheel.style.display = 'block';
+        wheel.style.opacity = '1';
+        wheel.style.animation = 'wheel-move 2.2s cubic-bezier(.77,.2,.18,1) forwards';
+        setTimeout(() => {
+          wheel.style.opacity = '0';
+          setTimeout(() => { wheel.style.display = 'none'; }, 600);
+        }, 2200);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', animateWheel);
+    window.addEventListener('resize', animateWheel);
+  </script>
+  <header>
+    <h1>Papum Encomendas</h1>
+    <p>Soluções rápidas para suas entregas e logística!</p>
+  </header>
+  <nav>
+  <a href="index.html">Início</a>
+  <a href="#servicos">Serviços</a>
+  <a href="#sobre">Sobre</a>
+  <a href="app.html">Contratar</a>
+  </nav>
+
+  <main>
+    <div style="max-width:480px;margin:0 auto;text-align:center;">
+      <h2 style="color:#FFA500;font-family:'Oswald',Arial,sans-serif;margin-bottom:10px;">Compartilhe sua rota</h2>
+      <p class="hint" style="margin-bottom:22px;">Monte sua rota no <b>Google Maps</b>, copie o link da corrida e cole abaixo para enviar pelo WhatsApp.</p>
+      <div style="margin-bottom:14px;text-align:left;">
+        <label for="nome" style="font-weight:700;">Nome:</label>
+        <input id="nome" type="text" placeholder="Seu nome" style="width:100%;padding:12px;border-radius:8px;border:1px solid #ccc;margin-top:6px;">
+      </div>
+      <button onclick="window.open('https://www.google.com/maps/dir/', '_blank')" style="background:#FFA500;color:#23272a;border:none;border-radius:30px;padding:14px 36px;font-size:1.1rem;font-weight:bold;box-shadow:0 2px 8px rgba(255,165,0,0.15);margin-bottom:18px;cursor:pointer;">Abrir Google Maps</button>
+      <div style="margin:18px 0 8px 0;text-align:left;">
+        <label for="url" style="font-weight:700;">Cole o link da rota do Google Maps</label>
+        <input id="url" type="url" placeholder="https://www.google.com/maps/dir/Origem/Destino..." style="width:100%;padding:12px;border-radius:8px;border:1px solid #ccc;margin-top:6px;">
+      </div>
+      <div class="preview" id="preview" style="display:none;text-align:left;margin-bottom:18px;"></div>
+  <!-- Campo WhatsApp removido, número fixo -->
+      <div style="margin-top:18px;text-align:left;">
+        <label for="descricao" style="font-weight:700;">Descrição:</label>
+        <textarea id="descricao" rows="3" placeholder="Descreva a natureza do serviço..." style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;margin-bottom:10px;"></textarea>
+  <!-- Adicionais removidos -->
+      </div>
+      <button id="btnWhats" style="background:#FFA500;color:#23272a;border:none;border-radius:30px;padding:14px 36px;font-size:1.1rem;font-weight:bold;box-shadow:0 2px 8px rgba(255,165,0,0.15);margin-top:18px;cursor:pointer;">Solicitar corrida!</button>
+      <p class="hint" style="margin-top:18px;">Observação: O link deve ser gerado no Google Maps. Não é necessário informar origem/destino aqui.<br>O WhatsApp será aberto com o link da rota para contratação.</p>
+    </div>
+  </main>
+
+  <footer>&copy; 2025 Papum Encomendas. Todos os direitos reservados.</footer>
+
+  <script>
+    const $ = sel => document.querySelector(sel);
+    const btnWhats = $('#btnWhats');
+    function isValidMapsUrl(url) {
+      // Aceita links do tipo https://www.google.com/maps/dir/...
+      // e https://maps.app.goo.gl/...
+      return /^https:\/\/(www\.)?google\.com\/maps\/dir\//.test(url) ||
+             /^https:\/\/maps\.app\.goo\.gl\//.test(url);
+    }
+    $('#url').addEventListener('change', ()=>{
+      const url = $('#url').value.trim();
+      if(!url) return;
+      if (!isValidMapsUrl(url)) {
+        $('#preview').innerHTML = `<span style="color:#c00;font-weight:bold;">Link inválido! Use uma rota do Google Maps.</span>`;
+        $('#preview').style.display = 'block';
+        return;
+      }
+      $('#preview').innerHTML = `<strong>Rota:</strong> <a href="${url}" target="_blank">${url}</a>`;
+      $('#preview').style.display = 'block';
+    });
+    btnWhats.addEventListener('click', ()=>{
+      const url = $('#url').value.trim();
+      const phone = '555198768525';
+      const nome = $('#nome').value.trim();
+      if(!url){ alert('Cole o link da rota do Google Maps primeiro.'); return; }
+      if (!isValidMapsUrl(url)) {
+        alert('O link inserido não é uma rota válida do Google Maps.');
+        return;
+      }
+      let msg = `Olá, me chamo ${nome || '[não informado]'}! Gostaria de contratar uma entrega.`;
+      const desc = $('#descricao').value.trim();
+      msg += `\n\nDescrição:\n${desc ? ' ' + desc : ' [não informado]'}`;
+      msg += `\n\nRota no Google Maps:\n\n${url}`;
+      let adicionais = '';
+      if (document.getElementById('precisoEspere').checked) {
+        const horas = document.getElementById('horas').value.trim();
+        if (!horas || isNaN(horas) || parseInt(horas) < 1) {
+          alert('Informe o número de horas para espera.');
+          return;
+        }
+        adicionais += `Preciso que o motorista espere por ${horas} hora(s).`;
+      }
+      msg += `\n\nAdicionais:\n${adicionais || '[nenhum]'}`;
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank');
+    });
+  </script>
+</body>
+</html>
