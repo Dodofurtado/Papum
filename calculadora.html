@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Preços - PAPUM Entregas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #FF6B00;
+            --color-primary-dark: #CC5500;
+            --color-secondary: #1E293B;
+            --color-dark: #0F172A;
+            --color-gray: #64748B;
+            --color-gray-light: #CBD5E1;
+            --color-gray-lighter: #F1F5F9;
+            --color-white: #FFFFFF;
+            --font-primary: 'Inter', sans-serif;
+            --font-secondary: 'Source Sans 3', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--color-dark);
+            line-height: 1.5;
+            background-color: #F4EDDC;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            background-color: var(--color-white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            padding: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background-color: var(--color-dark);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: var(--color-primary);
+        }
+
+        .hero {
+            background-color: #F4EDDC;
+            padding: 4rem 0;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--color-gray);
+            margin-bottom: 2rem;
+        }
+
+        .calculator-container {
+            background: var(--color-white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+
+        .input-group input {
+            padding: 0.75rem;
+            border: 2px solid var(--color-gray-light);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            align-self: flex-start;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: var(--color-primary-dark);
+        }
+
+        .calculator-result {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 8px;
+            background: var(--color-gray-lighter);
+            display: none;
+        }
+
+        .calculator-result.active {
+            display: block;
+        }
+
+        .calculator-result .total,
+        .calculator-result .affiliate-total {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-top: 0.75rem;
+        }
+
+.affiliate-result {
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 2px dashed var(--color-primary);
+        }
+
+        .affiliate-result__title {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .affiliate-result p + p {
+            margin-top: 0.35rem;
+        }
+
+        .calculator-result .small {
+            font-size: 0.875rem;
+            color: var(--color-gray);
+            margin-top: 0.75rem;
+        }
+
+        .result-actions {
+            margin-top: 1.5rem;
+        }
+
+        .result-actions .btn-primary {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .price-table {
+            margin: 3rem 0;
+            background: var(--color-white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .price-table h2 {
+            margin-bottom: 1.5rem;
+            color: var(--color-dark);
+            text-align: center;
+        }
+
+        .price-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .price-table th,
+        .price-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--color-gray-light);
+            text-align: left;
+        }
+
+        .price-table th {
+            background-color: #F4EDDC;
+            font-weight: 600;
+        }
+
+        .price-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: var(--color-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .whatsapp-button:hover,
+        .whatsapp-button:focus {
+            transform: scale(1.1);
+        }
+
+        .animate-on-scroll {
+            opacity: 1;
+            transform: none;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .affiliate-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(15, 23, 42, 0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            z-index: 1100;
+        }
+
+        .affiliate-modal.is-active {
+            display: flex;
+        }
+
+        .affiliate-modal__content {
+            position: relative;
+            max-width: 440px;
+            width: 100%;
+            background-color: var(--color-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
+        }
+
+        .affiliate-modal__image {
+            width: 100%;
+            height: auto;
+        }
+
+        .affiliate-modal__close {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background-color: rgba(15, 23, 42, 0.75);
+            color: var(--color-white);
+            font-size: 1.25rem;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .affiliate-modal__close:hover,
+        .affiliate-modal__close:focus {
+            background-color: var(--color-primary);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 960px) {
+            .hero-container {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .calculator-container {
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav {
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--color-white);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+
+            .nav.active {
+                display: block;
+            }
+
+            .nav-list {
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-link {
+                display: block;
+                padding: 0.75rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="./assets/logo_flat.png" alt="PAPUM Entregas" width="120" height="40">
+            </a>
+            <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav" aria-label="Menu principal">
+                <ul class="nav-list">
+                    <li><a class="nav-link" href="index.html#inicio">Início</a></li>
+                    <li><a class="nav-link" href="index.html#servicos">Serviços</a></li>
+                    <li><a class="nav-link" href="index.html#abrangencia">Abrangência</a></li>
+                    <li><a class="nav-link" href="index.html#precos">Preços</a></li>
+                    <li><a class="nav-link" target="_blank" rel="noopener" href="https://www.google.com/maps/place/Papum+Encomendas/@-29.8614882,-50.9995105,10z/data=!4m8!3m7!1s0xe4e4b378f0c1eb5:0x33f325c06c66bec5!8m2!3d-29.8614882!4d-50.9995104!9m1!1b1!16s%2Fg%2F11y02fbm0q?entry=ttu">Depoimentos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-container">
+                <div class="hero-content animate-on-scroll">
+                    <h1 class="hero-title">Calcule o valor da sua entrega</h1>
+                    <p class="hero-subtitle">Informe a distância da entrega para estimar o custo.</p>
+
+                    <div class="calculator-container">
+                        <form id="priceCalculator" class="calculator-form">
+                            <div class="input-group">
+                                <label for="tripDistance">Distância (km)</label>
+                                <input type="number" id="tripDistance" name="tripDistance" min="0" step="0.1" placeholder="Ex.: 35" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Calcular preço</button>
+                        </form>
+                        <div id="result" class="calculator-result" aria-live="polite"></div>
+                    </div>
+
+                    <div class="price-table">
+                        <h2>Tabela de preços por distância</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Distância</th>
+                                    <th>Valor por km</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0 a 50 km</td>
+                                    <td>R$ 1,00/km</td>
+                                </tr>
+                                <tr>
+                                    <td>50 a 150 km</td>
+                                    <td>R$ 0,90/km</td>
+                                </tr>
+                                <tr>
+                                    <td>150 a 250 km</td>
+                                    <td>R$ 0,80/km</td>
+                                </tr>
+                                <tr>
+                                    <td>250 a 350 km</td>
+                                    <td>R$ 0,70/km</td>
+                                </tr>
+                                <tr>
+                                    <td>350 a 450 km</td>
+                                    <td>R$ 0,60/km</td>
+                                </tr>
+                                <tr>
+                                    <td>Acima de 450 km</td>
+                                    <td>R$ 0,50/km</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="hero-image animate-on-scroll">
+                    <img src="./assets/Papum_Logo_vazado.png" alt="Entrega PAPUM" width="600" height="400" class="hero-logo">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <a class="whatsapp-button" href="https://wa.me/5551996774470?text=Ol%C3%A1%20PAPUM!%20Quero%20uma%20cota%C3%A7%C3%A3o." aria-label="Chamar no WhatsApp">
+        <svg viewBox="0 0 24 24" width="30" height="30" role="img" aria-hidden="true">
+            <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path>
+        </svg>
+    </a>
+
+    <div class="affiliate-modal" aria-hidden="true" role="dialog" aria-label="Promoção PAPUM Afiliados">
+        <div class="affiliate-modal__content">
+            <button type="button" class="affiliate-modal__close" aria-label="Fechar anúncio">×</button>
+            <img src="./assets/afiliados.jpg" alt="Oferta PAPUM Afiliados" class="affiliate-modal__image">
+        </div>
+    </div>
+
+            <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('.nav');
+        const form = document.getElementById('priceCalculator');
+        const resultDiv = document.getElementById('result');
+        const affiliateModal = document.querySelector('.affiliate-modal');
+        const affiliateModalClose = document.querySelector('.affiliate-modal__close');
+        const currencyFormatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        if (menuToggle && nav) {
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+                nav.classList.toggle('active');
+            });
+        }
+
+        if (form) {
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                calculatePrice();
+            });
+        }
+
+        if (affiliateModal) {
+            affiliateModal.classList.add('is-active');
+            affiliateModal.setAttribute('aria-hidden', 'false');
+
+            affiliateModal.addEventListener('click', (event) => {
+                if (event.target === affiliateModal) {
+                    closeAffiliateModal();
+                }
+            });
+        }
+
+        if (affiliateModalClose) {
+            affiliateModalClose.addEventListener('click', closeAffiliateModal);
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeAffiliateModal();
+            }
+        });
+
+        function calculatePrice() {
+            const tripDistance = parseFloat(document.getElementById('tripDistance').value);
+
+            if (!isValidDistance(tripDistance)) {
+                resultDiv.innerHTML = '<p class="error">Por favor, digite uma distância válida.</p>';
+                resultDiv.classList.add('active');
+                return;
+            }
+
+            const ratePerKm = getRateByDistance(tripDistance);
+            const price = tripDistance * ratePerKm;
+            const affiliateRate = getAffiliateRate(tripDistance);
+            const affiliatePrice = getAffiliatePrice(tripDistance);
+
+            resultDiv.innerHTML = `
+                <p>Sua faixa de distância: <strong>${getRateDescription(tripDistance)}</strong></p>
+                <p>Valor por km: <strong>${currencyFormatter.format(ratePerKm)}</strong></p>
+                <p class="total">Valor estimado da entrega: <strong>${currencyFormatter.format(price)}</strong></p>
+                <div class="affiliate-result">
+                    <p class="affiliate-result__title">Comparativo PAPUM Afiliados</p>
+                    <p>Valor por km: <strong>${currencyFormatter.format(affiliateRate)}</strong></p>
+                    <p class="affiliate-total">Valor estimado da entrega: <strong>${currencyFormatter.format(affiliatePrice)}</strong></p>
+                </div>
+                <div class="result-actions">
+                    <a class="btn-primary" href="solicitar.html">Solicitar Entrega</a>
+                </div>
+                <p class="small">*Valores estimados. Podem variar conforme volume, peso e condições de operação.</p>
+            `;
+            resultDiv.classList.add('active');
+        }
+
+        function isValidDistance(value) {
+            return Number.isFinite(value) && value >= 0;
+        }
+
+        function getRateByDistance(distance) {
+            if (distance <= 50) return 1.0;
+            if (distance <= 150) return 0.9;
+            if (distance <= 250) return 0.8;
+            if (distance <= 350) return 0.7;
+            if (distance <= 450) return 0.6;
+            return 0.5;
+        }
+
+        function getRateDescription(distance) {
+            if (distance <= 50) return '0 a 50 km';
+            if (distance <= 150) return '50 a 150 km';
+            if (distance <= 250) return '150 a 250 km';
+            if (distance <= 350) return '250 a 350 km';
+            if (distance <= 450) return '350 a 450 km';
+            return 'Acima de 450 km';
+        }
+
+        function getAffiliateRate(distance) {
+            return distance <= 40 ? 0 : 0.4;
+        }
+
+        function getAffiliatePrice(distance) {
+            return distance <= 40 ? 0 : distance * 0.4;
+        }
+
+        function closeAffiliateModal() {
+            if (!affiliateModal) return;
+            affiliateModal.classList.remove('is-active');
+            affiliateModal.setAttribute('aria-hidden', 'true');
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Entrega - PAPUM Entregas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --color-primary: #FF6B00;
+            --color-primary-dark: #CC5500;
+            --color-secondary: #1E293B;
+            --color-dark: #0F172A;
+            --color-gray: #64748B;
+            --color-gray-light: #CBD5E1;
+            --color-gray-lighter: #F1F5F9;
+            --color-white: #FFFFFF;
+        }
+
+        body {
+            background-color: #F4EDDC;
+            font-family: 'Inter', sans-serif;
+            color: var(--color-dark);
+        }
+
+        .header {
+            background-color: var(--color-white);
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .request-section {
+            padding: 4rem 0;
+        }
+
+        .request-container {
+            display: grid;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .request-info h1 {
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .request-info p {
+            color: var(--color-gray);
+            margin-bottom: 1.5rem;
+            max-width: 520px;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background-color: var(--color-white);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+            max-width: 520px;
+        }
+
+        .tips-list li {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            font-size: 0.95rem;
+            color: var(--color-dark);
+        }
+
+        .tips-list li + li {
+            margin-top: 0.75rem;
+        }
+
+        .tips-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background-color: rgba(255, 107, 0, 0.12);
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .request-card {
+            background-color: var(--color-white);
+            border-radius: 16px;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+            padding: 2rem;
+            max-width: 640px;
+            width: 100%;
+        }
+
+        .request-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--color-secondary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.85rem;
+            border: 2px solid var(--color-gray-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--color-dark);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
+            outline: none;
+        }
+
+        .time-row {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .time-row .form-group {
+            flex: 1;
+        }
+
+        .route-field {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .route-field input {
+            flex: 1 1 240px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 0.85rem 1.75rem;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: var(--color-primary-dark);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+            background-color: transparent;
+            padding: 0.75rem 1.5rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-outline:hover,
+        .btn-outline:focus {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .helper-text {
+            font-size: 0.85rem;
+            color: var(--color-gray);
+        }
+
+        @media (min-width: 768px) {
+            .request-container {
+                grid-template-columns: 1.1fr 1fr;
+            }
+
+            .time-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 767px) {
+            .request-section {
+                padding: 3rem 0;
+            }
+
+            .request-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" aria-label="Voltar para a página inicial">
+                <img src="assets/logo_flat.png" alt="PAPUM Entregas" width="120" height="40">
+            </a>
+            <a href="https://wa.me/5551996774470?text=Ol%C3%A1%20PAPUM!%20Preciso%20de%20ajuda%20com%20uma%20entrega." class="btn btn-outline">Falar no WhatsApp</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="request-section">
+            <div class="container request-container">
+                <div class="request-info">
+                    <h1>Solicite sua entrega PAPUM</h1>
+                    <p>Preencha apenas o essencial para que possamos agilizar o seu pedido. Em seguida, clique em "Fazer Pedido" para abrir o WhatsApp já com todas as informações.</p>
+                    <ul class="tips-list">
+                        <li><span class="tips-icon">1</span> Escolha a cidade de coleta e de entrega conforme a nossa área de atuação.</li>
+                        <li><span class="tips-icon">2</span> Informe os horários ideais para que nossa equipe combine a coleta e a entrega com você.</li>
+                        <li><span class="tips-icon">3</span> Cole o link da rota do Google Maps (quando possível) para agilizar a conferência do trajeto.</li>
+                    </ul>
+                </div>
+
+                <div class="request-card">
+                    <h2>Dados do pedido</h2>
+                    <form id="requestForm" class="form-grid" novalidate>
+                        <div class="form-group">
+                            <label for="clientName">Seu nome *</label>
+                            <input type="text" id="clientName" name="clientName" placeholder="Ex.: Maria Souza">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickupCity">Cidade de coleta *</label>
+                            <select id="pickupCity" name="pickupCity">
+                                <option value="" disabled selected>Selecione a cidade de coleta</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deliveryCity">Cidade de entrega *</label>
+                            <select id="deliveryCity" name="deliveryCity">
+                                <option value="" disabled selected>Selecione a cidade de entrega</option>
+                            </select>
+                        </div>
+
+                        <div class="time-row">
+                            <div class="form-group">
+                                <label for="pickupTime">Hora ideal de coleta *</label>
+                                <input type="time" id="pickupTime" name="pickupTime">
+                                <span class="helper-text">Informe a janela preferida para coletarmos.</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="deliveryTime">Hora ideal de entrega *</label>
+                                <input type="time" id="deliveryTime" name="deliveryTime">
+                                <span class="helper-text">Se não tiver horário fixo, escolha o mais próximo.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="routeLink">Link da rota no Google Maps</label>
+                            <div class="route-field">
+                                <input type="url" id="routeLink" name="routeLink" placeholder="Cole aqui o link completo (opcional)">
+                                <button type="button" id="openRoute" class="btn btn-outline">Abrir rota</button>
+                            </div>
+                            <span class="helper-text">Sugestão: monte a rota no Google Maps, copie o link e cole aqui.</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Observações adicionais</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Informe detalhes importantes (acesso ao local, contato, volume da carga...)" ></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Fazer Pedido</button>
+                            <a href="https://wa.me/5551996774470" class="btn btn-outline" target="_blank" rel="noopener">Falar direto no WhatsApp</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+            <script>
+        const citiesByRegion = {
+            'Vale do Paranhana': ['Taquara', 'Igrejinha', 'Três Coroas', 'Parobé', 'Rolante', 'Riozinho'],
+            'Vale dos Sinos': ['Novo Hamburgo', 'São Leopoldo', 'Campo Bom', 'Sapiranga'],
+            'Região Metropolitana de Porto Alegre': ['Porto Alegre', 'Canoas', 'Gravataí', 'Cachoeirinha', 'Alvorada', 'Viamão']
+        };
+
+        const pickupSelect = document.getElementById('pickupCity');
+        const deliverySelect = document.getElementById('deliveryCity');
+        const requestForm = document.getElementById('requestForm');
+        const openRouteButton = document.getElementById('openRoute');
+        const routeInput = document.getElementById('routeLink');
+        const whatsappNumber = '5551996774470';
+
+        function populateCitySelect(selectElement) {
+            Object.entries(citiesByRegion).forEach(([region, cities]) => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = region;
+
+                cities.forEach((city) => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    optgroup.appendChild(option);
+                });
+
+                selectElement.appendChild(optgroup);
+            });
+        }
+
+        populateCitySelect(pickupSelect);
+        populateCitySelect(deliverySelect);
+
+        if (openRouteButton) {
+            openRouteButton.addEventListener('click', () => {
+                const url = routeInput.value.trim();
+                if (!url) {
+                    alert('Cole o link completo da rota antes de abrir.');
+                    return;
+                }
+
+                const hasProtocol = /^https?:\/\//i.test(url);
+                const finalUrl = hasProtocol ? url : `https://${url}`;
+                window.open(finalUrl, '_blank');
+            });
+        }
+
+        if (requestForm) {
+            requestForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const name = document.getElementById('clientName').value.trim();
+                const pickupCity = pickupSelect.value;
+                const deliveryCity = deliverySelect.value;
+                const pickupTime = document.getElementById('pickupTime').value;
+                const deliveryTime = document.getElementById('deliveryTime').value;
+                const routeLink = routeInput.value.trim();
+                const notes = document.getElementById('notes').value.trim();
+
+                const formatTime = (timeValue) => {
+                    if (!timeValue) return 'a combinar';
+                    const [hour, minute] = timeValue.split(':');
+                    return `${hour}h${minute}`;
+                };
+
+                const withFallback = (value, fallback) => (value ? value : fallback);
+
+                const messageLines = [
+                    'Olá PAPUM! Quero fazer um pedido de entrega.',
+                    `Nome: ${withFallback(name, 'informar na conversa')}`,
+                    `Coleta em: ${withFallback(pickupCity, 'informar na conversa')}`,
+                    `Entrega em: ${withFallback(deliveryCity, 'informar na conversa')}`,
+                    `Hora ideal de coleta: ${formatTime(pickupTime)}`,
+                    `Hora ideal de entrega: ${formatTime(deliveryTime)}`,
+                    routeLink ? `Rota sugerida: ${routeLink}` : 'Rota sugerida: informar pelo WhatsApp',
+                ];
+
+                if (notes) {
+                    messageLines.push(`Observações: ${notes}`);
+                }
+
+                const messageText = messageLines.join('\n');
+                const encodedMessage = encodeURIComponent(messageText);
+                const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+                const whatsappUrl = isMobile
+                    ? `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
+                    : `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
+
+                window.open(whatsappUrl, '_blank');
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
