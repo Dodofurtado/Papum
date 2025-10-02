@@ -72,7 +72,7 @@
     <meta property="og:image" content="assets/og-image.jpg">
     <meta property="og:type" content="website">
 </head>
-<body>
+<body class="home-page">
     <!-- Header -->
     <header class="header">
         <div class="container header-container">
@@ -90,8 +90,9 @@
                 <ul class="nav-list">
                     <li><a href="#inicio" class="nav-link">Início</a></li>
                     <li><a href="#servicos" class="nav-link">Serviços</a></li>
-                    <li><a href="#abrangencia" class="nav-link">Abrangência</a></li>
+                    <li><a href="#cidades-atendidas" class="nav-link">Cidades atendidas</a></li>
                     <li><a href="#precos" class="nav-link">Preços</a></li>
+                    <li><a href="#contatos" class="nav-link">Contatos</a></li>
                     <li><a href="https://www.google.com/maps/place/Papum+Encomendas/@-29.8614882,-50.9995105,10z/data=!4m8!3m7!1s0xe4e4b378f0c1eb5:0x33f325c06c66bec5!8m2!3d-29.8614882!4d-50.9995104!9m1!1b1!16s%2Fg%2F11y02fbm0q?entry=ttu&g_ep=EgoyMDI1MDkyOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="nav-link">Depoimentos</a></li>
                 </ul>
             </nav>
@@ -104,7 +105,7 @@
             <div class="container hero-container">
                 <div class="hero-content animate-on-scroll">
                     <h1 class="hero-title">CONECTAMOS PESSOAS E NEGÓCIOS</h1>
-                    <p class="hero-subtitle">Pediu. Chegou! PaPum!</p>
+                    <p class="hero-subtitle">Pediu. PAPUM! Chegou!</p>
                     <div class="hero-cta">
                         <a href="solicitar.html" class="btn btn-primary">
                             <svg class="icon" viewBox="0 0 24 24" width="24" height="24">
@@ -119,19 +120,19 @@
                             <svg class="feature-icon" viewBox="0 0 24 24">
                                 <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                             </svg>
-                            <span>Coleta no mesmo dia</span>
+                            <span>Coleta e entrega de forma ágil e confiável</span>
                         </div>
                         <div class="feature">
                             <svg class="feature-icon" viewBox="0 0 24 24">
                                 <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                             </svg>
-                            <span>Rastreamento por mensagem</span>
+                            <span>Coletas e entregas todos os dias da semana</span>
                         </div>
                         <div class="feature">
                             <svg class="feature-icon" viewBox="0 0 24 24">
                                 <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                             </svg>
-                            <span>Agilidade e Confiança</span>
+                            <span>Sua encomenda nas mãos certas</span>
                         </div>
                     </div>
                 </div>
@@ -185,8 +186,8 @@
             </div>
         </section>
 
-        <!-- Abrangência Section -->
-        <section id="abrangencia" class="section">
+        <!-- Cidades Atendidas Section -->
+        <section id="cidades-atendidas" class="section">
             <div class="container">
                 <h2 class="section-title animate-on-scroll">CIDADES ATENDIDAS</h2>
                 <div class="coverage-grid">
@@ -247,7 +248,79 @@
             </div>
         </section>
 
+        <!-- Tabela de Padrões de Encomendas -->
+        <section class="section" id="padroes-encomendas">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Tabela de Padrões de Encomendas</h2>
+                <div class="standards-table-wrapper animate-on-scroll">
+                    <table class="standards-table" aria-describedby="observacao-padroes">
+                        <thead>
+                            <tr>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Exemplos</th>
+                                <th scope="col">Dimensões Máximas</th>
+                                <th scope="col">Peso Máximo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Envelope</th>
+                                <td>Documentos, papéis, cartões</td>
+                                <td>até 25 × 35 cm</td>
+                                <td>até 500 g</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pacote Médio</th>
+                                <td>Roupas, eletrônicos pequenos</td>
+                                <td>até 35 × 35 × 25 cm</td>
+                                <td>até 5 kg</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Caixa Grande</th>
+                                <td>Equipamentos, múltiplos itens</td>
+                                <td>até 45 × 35 × 35 cm</td>
+                                <td>até 12 kg</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p id="observacao-padroes" class="standards-note">Observação: consulte-nos para volumes especiais ou fora do padrão.</p>
+            </div>
+        </section>
+
     </main>
+
+    <footer class="footer" id="contatos">
+        <div class="container footer-container">
+            <div class="footer-column footer-brand">
+                <div class="footer-logo-wrapper">
+                    <img src="assets/logo_flat.png" alt="PAPUM Entregas" width="150" height="50">
+                </div>
+                <p class="footer-location">Três Coroas - RS</p>
+                <a class="footer-review" href="https://g.page/r/CcW-ZmzAJfMzEAE/review" target="_blank" rel="noopener">Avaliações no Google</a>
+            </div>
+            <div class="footer-column footer-contacts">
+                <h3 class="footer-title">Contatos</h3>
+                <ul class="footer-list">
+                    <li><a href="https://wa.me/5551996774470" target="_blank" rel="noopener">WhatsApp: (51) 99677-4470</a></li>
+                    <li><a href="https://www.instagram.com/papumencomendas?utm_source=ig_web_button_share_sheet&amp;igsh=c3ZvOTFjNTNyaTM1" target="_blank" rel="noopener">Instagram: @papumencomendas</a></li>
+                    <li><a href="https://www.facebook.com/share/172uvFdACY/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook: Papum Encomendas</a></li>
+                    <li><a href="mailto:Papumencomendas@gmail.com">E-mail: Papumencomendas@gmail.com</a></li>
+                </ul>
+            </div>
+            <div class="footer-column footer-code">
+                <h3 class="footer-title">Instagram QR Code</h3>
+                <div class="footer-qr-wrapper">
+                    <img src="assets/instagran.jpg" alt="QR Code do Instagram PAPUM Encomendas" width="140" height="140">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PAPUM Entregas. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+
 
     <!-- WhatsApp Fixed Button -->
     <a href="https://wa.me/5551996774470?text=Olá%20PAPUM!%20Quero%20uma%20cotação." class="whatsapp-button" aria-label="Chamar no WhatsApp">
@@ -259,5 +332,7 @@
     <script src="js/main.js"></script>
 </body>
 </html>
+
+
 
 

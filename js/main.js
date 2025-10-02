@@ -33,29 +33,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Header Shadow on Scroll
     const header = document.querySelector('.header');
-    let lastScroll = 0;
 
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        
-        // Add/remove shadow based on scroll position
-        if (currentScroll > 0) {
-            header?.classList.add('header-shadow');
-        } else {
-            header?.classList.remove('header-shadow');
-        }
+    if (header) {
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
 
-        // Hide/show header based on scroll direction
-        if (currentScroll > lastScroll && currentScroll > 80) {
-            header?.classList.add('header-hidden');
-        } else {
-            header?.classList.remove('header-hidden');
-        }
+            if (currentScroll > 0) {
+                header.classList.add('header-shadow');
+            } else {
+                header.classList.remove('header-shadow');
+            }
+        });
+    }
 
-        lastScroll = currentScroll;
-    });
-
-    // Intersection Observer for Animations
+// Intersection Observer for Animations
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     
     const observer = new IntersectionObserver((entries) => {
